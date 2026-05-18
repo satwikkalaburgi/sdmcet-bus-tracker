@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Bus, MapPin, ShieldCheck, Activity, UserPlus, LogIn, GraduationCap, Car } from 'lucide-react';
 
-const API_BASE = `http://${window.location.hostname}:5000`;
+const API_BASE = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5000`;
 
 const Login = ({ setUser }) => {
   const [role, setRole] = useState(''); // 'student' or 'driver'
