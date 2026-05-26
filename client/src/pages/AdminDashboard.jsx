@@ -4,7 +4,7 @@ import { Bus, Map, Users, Settings, Activity, CheckCircle, RefreshCw } from 'luc
 import Navbar from '../components/Navbar';
 import LiveMap from '../components/LiveMap';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5000`;
+const API_BASE = localStorage.getItem('custom_api_base') || import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5000`;
 
 const AdminDashboard = ({ user, onLogout }) => {
   const [buses, setBuses] = useState([]);

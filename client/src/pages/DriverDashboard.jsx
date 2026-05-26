@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 import { Play, Square, Navigation, MapPin } from 'lucide-react';
 import Navbar from '../components/Navbar';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5000`;
+const API_BASE = localStorage.getItem('custom_api_base') || import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5000`;
 
 const DriverDashboard = ({ user, onLogout }) => {
   const [buses, setBuses] = useState([]);

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Bus, MapPin, ShieldCheck, Activity, UserPlus, LogIn, GraduationCap, Car } from 'lucide-react';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5000`;
+const API_BASE = localStorage.getItem('custom_api_base') || import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5000`;
 
 const Login = ({ setUser }) => {
   const [role, setRole] = useState(''); // 'student' or 'driver'
@@ -27,6 +27,29 @@ const Login = ({ setUser }) => {
 
   const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  // Custom Developer IP State
+  const [customIp, setCustomIp] = useState(localStorage.getItem('custom_api_base') || '');
+
+  const saveCustomIp = (ip) => {
+    const trimmed = ip.trim();
+    if (trimmed) {
+      let formattedIp = trimmed;
+      if (!formattedIp.startsWith('http')) {
+        formattedIp = `http://${formattedIp}`;
+      }
+      if (!formattedIp.includes(':5000') && !formattedIp.includes(':5001') && !formattedIp.includes('.app') && !formattedIp.includes('.com')) {
+        formattedIp = `${formattedIp}:5000`;
+      }
+      localStorage.setItem('custom_api_base', formattedIp);
+      alert(`Connected to database server at: ${formattedIp}\nReloading page...`);
+      window.location.reload();
+    } else {
+      localStorage.removeItem('custom_api_base');
+      alert('Reset to default system connection. Reloading page...');
+      window.location.reload();
+    }
+  };
 
   const handleAuth = async (e) => {
     e.preventDefault();
@@ -311,6 +334,45 @@ const Login = ({ setUser }) => {
           <div className="absolute bottom-0 left-0 w-32 h-32 bg-emerald-500/20 rounded-full blur-3xl" />
           
           {!role ? renderRoleSelection() : renderAuthForm()}
+
+          {/* Developer Server Settings */}
+          <div className="mt-8 pt-4 border-t border-slate-700/50 w-full text-center">
+            <details className="cursor-pointer group">
+              <summary className="text-xs text-slate-400 hover:text-indigo-400 transition-colors list-none flex items-center justify-center gap-1 font-medium select-none">
+                ⚙️ Developer Connection Settings
+              </summary>
+              <div className="mt-3 flex flex-col gap-2 bg-slate-900/40 p-3 rounded-xl border border-slate-700/30 text-left">
+                <p className="text-[11px] text-slate-400 leading-normal">
+                  If running on Vercel but your database server is running locally on your laptop, enter your laptop's local IP address (e.g. <code>192.168.1.15</code>) below to connect:
+                </p>
+                <div className="flex gap-2 mt-1">
+                  <input 
+                    type="text" 
+                    placeholder="e.g. 192.168.1.15" 
+                    className="glass-input text-xs py-2 px-3 flex-1 h-9"
+                    value={customIp.replace('http://', '').replace(':5000', '')}
+                    onChange={(e) => setCustomIp(e.target.value)}
+                  />
+                  <button 
+                    type="button" 
+                    onClick={() => saveCustomIp(customIp)}
+                    className="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-3 rounded-xl transition-all font-semibold h-9"
+                  >
+                    Save
+                  </button>
+                  {localStorage.getItem('custom_api_base') && (
+                    <button 
+                      type="button" 
+                      onClick={() => saveCustomIp('')}
+                      className="bg-slate-700 hover:bg-slate-600 text-slate-200 text-xs px-3 rounded-xl transition-all font-medium h-9"
+                    >
+                      Reset
+                    </button>
+                  )}
+                </div>
+              </div>
+            </details>
+          </div>
 
         </div>
       </div>

@@ -5,7 +5,7 @@ import { Clock, Map as MapIcon, Info } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import LiveMap from '../components/LiveMap';
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5000`;
+const API_BASE = localStorage.getItem('custom_api_base') || import.meta.env.VITE_API_BASE_URL || `http://${window.location.hostname}:5000`;
 
 const getNearestCheckpointName = (lat, lng, route) => {
   if (!lat || !lng) {
