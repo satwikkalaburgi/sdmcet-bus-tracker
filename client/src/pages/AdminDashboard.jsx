@@ -95,41 +95,41 @@ const AdminDashboard = ({ user, onLogout }) => {
   };
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex flex-col md:h-screen md:overflow-hidden min-h-screen">
       <Navbar user={user} onLogout={onLogout} />
       
-      <div className="flex flex-col md:flex-row flex-1 p-4 gap-4 h-[calc(100vh-100px)]">
+      <div className="flex flex-col md:flex-row flex-1 p-4 gap-4 md:h-[calc(100vh-100px)] overflow-y-auto md:overflow-hidden">
         
         {/* Sidebar */}
-        <div className="w-full md:w-64 flex flex-col gap-2">
-          <div className="glass-card p-4 flex flex-col gap-2">
+        <div className="w-full md:w-64 flex flex-col gap-2 shrink-0">
+          <div className="glass-card p-3 md:p-4 flex flex-row md:flex-col gap-2 overflow-x-auto scrollbar-none">
             <button 
               onClick={() => setActiveTab('overview')}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'overview' ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'hover:bg-slate-700/50 text-slate-300'}`}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all shrink-0 whitespace-nowrap ${activeTab === 'overview' ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'hover:bg-slate-700/50 text-slate-300'}`}
             >
               <Activity size={20} /> Overview
             </button>
             <button 
               onClick={() => setActiveTab('ai')}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'ai' ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'hover:bg-slate-700/50 text-slate-300'}`}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all shrink-0 whitespace-nowrap ${activeTab === 'ai' ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'hover:bg-slate-700/50 text-slate-300'}`}
             >
               <RefreshCw size={20} /> AI Optimization
             </button>
             <button 
               onClick={() => setActiveTab('users')}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'users' ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'hover:bg-slate-700/50 text-slate-300'}`}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all shrink-0 whitespace-nowrap ${activeTab === 'users' ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'hover:bg-slate-700/50 text-slate-300'}`}
             >
               <Users size={20} /> Manage Users
             </button>
             <button 
               onClick={() => setActiveTab('buses')}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'buses' ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'hover:bg-slate-700/50 text-slate-300'}`}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all shrink-0 whitespace-nowrap ${activeTab === 'buses' ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'hover:bg-slate-700/50 text-slate-300'}`}
             >
               <Bus size={20} /> Manage Buses
             </button>
             <button 
               onClick={() => setActiveTab('routes')}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'routes' ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'hover:bg-slate-700/50 text-slate-300'}`}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all shrink-0 whitespace-nowrap ${activeTab === 'routes' ? 'bg-indigo-500/20 text-indigo-300 font-bold' : 'hover:bg-slate-700/50 text-slate-300'}`}
             >
               <Map size={20} /> Manage Routes
             </button>
@@ -137,7 +137,7 @@ const AdminDashboard = ({ user, onLogout }) => {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 flex flex-col gap-4 overflow-hidden">
+        <div className="flex-1 flex flex-col gap-4 md:overflow-hidden">
           
           {/* Top Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -166,7 +166,7 @@ const AdminDashboard = ({ user, onLogout }) => {
 
           {/* Dynamic Content Area */}
           {activeTab === 'overview' && (
-            <div className="flex-1 glass-card p-2 relative h-full">
+            <div className="flex-1 glass-card p-2 relative min-h-[450px] md:h-full">
                <LiveMap buses={buses.filter(b => b.status === 'active')} />
             </div>
           )}
